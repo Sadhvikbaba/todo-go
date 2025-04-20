@@ -10,8 +10,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/Sadhvikbaba/go-todo/database"
-	"github.com/Sadhvikbaba/go-todo/models"
+	"github.com/Sadhvikbaba/todo-go/database"
+	"github.com/Sadhvikbaba/todo-go/models"
 )
 
 func Signup(c *fiber.Ctx) error {

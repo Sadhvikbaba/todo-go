@@ -3,10 +3,10 @@ package main
 import (
 	"log"
 
-	"github.com/Sadhvikbaba/go-todo/database"
-	"github.com/Sadhvikbaba/go-todo/handlers"
-	"github.com/Sadhvikbaba/go-todo/redis"
-	"github.com/Sadhvikbaba/go-todo/todocontrollers"
+	"github.com/Sadhvikbaba/todo-go/database"
+	"github.com/Sadhvikbaba/todo-go/handlers"
+	"github.com/Sadhvikbaba/todo-go/redis"
+	"github.com/Sadhvikbaba/todo-go/todocontrollers"
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )
