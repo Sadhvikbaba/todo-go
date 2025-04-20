@@ -3,6 +3,7 @@
 *.out
 *.log
 tmp/
+.env
 
 # Ignore vendor folder if using Go modules
 vendor/
