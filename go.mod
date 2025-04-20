@@ -1,4 +1,4 @@
-module github.com/Sadhvikbaba/go-todo
+module github.com/Sadhvikbaba/todo-go
 
 go 1.24.0
 
