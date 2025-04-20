@@ -1,0 +1,8 @@
+# Ignore binary executable files
+*.exe
+*.out
+*.log
+tmp/
+
+# Ignore vendor folder if using Go modules
+vendor/

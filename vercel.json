@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "main.go",
+        "use": "@vercel/go"
+      }
+    ],
+    "env": {
+      "MONGO_URI": "@database_url",
+      "JWT_SECRET": "@jwt_secret",
+      "REDIS_URL": "@redis_url"
+    }
+  }
+  
