@@ -8,11 +8,13 @@ import (
 	"github.com/Sadhvikbaba/todo-go/redis"
 	"github.com/Sadhvikbaba/todo-go/todocontrollers"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 )
 
 func main() {
 	// Load environment variables
+
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -26,6 +28,13 @@ func main() {
 
 	// Initialize Fiber app
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "http://localhost:3000",
+		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowCredentials: true,
+	}))
 
 	// Define routes
 	app.Post("/api/signup", handlers.Signup)
