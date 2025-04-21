@@ -268,7 +268,7 @@ func DeleteTodo(c *fiber.Ctx) error {
 	}
 
 	// MongoDB delete filter
-	filter := bson.M{"_id": todoID, "userId": userIDStr}
+	filter := bson.M{"_id": todoID}
 	_, err = database.DB.Collection("todos").DeleteOne(context.TODO(), filter)
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{"error": "Failed to delete todo from MongoDB"})
