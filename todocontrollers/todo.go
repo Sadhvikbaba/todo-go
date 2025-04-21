@@ -180,7 +180,7 @@ func UpdateTodo(c *fiber.Ctx) error {
 	}
 
 	// Update MongoDB
-	filter := bson.M{"_id": todoID, "userId": userIDStr}
+	filter := bson.M{"_id": todoID}
 	update := bson.M{
 		"$set": bson.M{
 			"title":       updatedData.Title,
