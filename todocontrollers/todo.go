@@ -30,25 +30,21 @@ func SetupTodoRoutes(app *fiber.App) {
 }
 
 func CreateTodo(c *fiber.Ctx) error {
-	// Parse request body into Todo struct
 	var todo models.Todo
 	if err := c.BodyParser(&todo); err != nil {
 		return c.Status(400).JSON(fiber.Map{"error": "Invalid todo format"})
 	}
 
-	// Extract user ID from JWT
 	userClaims, ok := c.Locals("user").(jwt.MapClaims)
 	if !ok {
 		return c.Status(400).JSON(fiber.Map{"error": "Invalid token claims"})
 	}
 
-	// Check if _id exists in claims and if it's a string
 	userIDStr, ok := userClaims["_id"].(string)
 	if !ok || userIDStr == "" {
 		return c.Status(400).JSON(fiber.Map{"error": "User ID not found in token"})
 	}
 
-	// Convert to ObjectID
 	userID, err := primitive.ObjectIDFromHex(userIDStr)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"error": "Invalid user ID"})
@@ -66,7 +62,18 @@ func CreateTodo(c *fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"error": "Failed to create todo"})
 	}
 
-	// Return success response
+	// Update Redis cache if it exists
+	cacheKey := fmt.Sprintf("todos:%s", userIDStr)
+	cachedTodos, err := redis.RedisClient.Get(redis.Ctx, cacheKey).Result()
+	if err == nil {
+		var todos []models.Todo
+		if err := json.Unmarshal([]byte(cachedTodos), &todos); err == nil {
+			todos = append(todos, todo)
+			todoBytes, _ := json.Marshal(todos)
+			redis.RedisClient.Set(redis.Ctx, cacheKey, todoBytes, 5*time.Minute)
+		}
+	}
+
 	return c.JSON(fiber.Map{"message": "Todo created successfully", "todo": todo})
 }
 
