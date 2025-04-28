@@ -239,7 +239,7 @@ func ToggleCompleteTodo(c *fiber.Ctx) error {
 	}
 
 	// Update in MongoDB
-	filter := bson.M{"_id": todoID, "userId": userIDStr}
+	filter := bson.M{"_id": todoID}
 	update := bson.M{
 		"$set": bson.M{
 			"isCompleted": newIsCompleted,
